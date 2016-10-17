@@ -6,9 +6,9 @@ using System.Xml.Linq;
 
 namespace FeedReader.FeedEngines
 {
-    public class Telegraph_RSSEngine : BaseRSSEngine
+    public class Telegraph_RSSEngine : BaseEngine
     {
-        public Telegraph_RSSEngine(PublicationSection section, NewsCrud_DBContext dbContext) : base(section, dbContext)
+        public Telegraph_RSSEngine(PublicationSection publicationSection, Publication publication, NewsCrud_DBContext dbContext) : base(publicationSection, publication, dbContext)
         {
         }
 
@@ -20,8 +20,11 @@ namespace FeedReader.FeedEngines
                           select new Model.ScrapeQueue()
                           {
                               Url = item.Elements().First(i => i.Name.LocalName == "link").Value,
+                              IdHash = Util.Tools.CreateIDHash(item.Elements().First(i => i.Name.LocalName == "title").Value, item.Elements().First(i => i.Name.LocalName == "link").Value),
                               DateAdded = DateTimeOffset.Now,
-                              IdHash = item.Elements().First(i => i.Name.LocalName == "title").Value
+                              PublicationCode = publication.Code,
+                              PublicationId = publication.Id,
+                              PublicationSectionId = publicationSection.Id
                           };
 
             _queueItems = entries.ToList();

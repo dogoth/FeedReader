@@ -33,7 +33,7 @@ namespace FeedReader.Controllers
         {
             List<Publication> scrapeEnabledPubs = _context.Publication.Where(p => p.ScrapeEnabled == true).ToList();
 
-            string s = "";
+
             List<Interfaces.IFeedEngine> feedEngines = new List<Interfaces.IFeedEngine>();
             foreach(Publication p in scrapeEnabledPubs)
             {
@@ -44,12 +44,12 @@ namespace FeedReader.Controllers
                     {
                         case "SMH":
                             {
-                                feedEngines.Add(new FeedEngines.SMH_RSSEngine(ps, _context));
+                                feedEngines.Add(new FeedEngines.SMH_RSSEngine(ps, p, _context));
                                 break;
                             }
                         case "Telegraph":
                             {
-                                feedEngines.Add(new FeedEngines.Telegraph_RSSEngine(ps, _context));
+                                feedEngines.Add(new FeedEngines.Telegraph_RSSEngine(ps, p, _context));
                                 break;
                             }
                     }
@@ -61,6 +61,12 @@ namespace FeedReader.Controllers
             foreach (Interfaces.IFeedEngine feed in feedEngines)
             {
                 feed.ProcessFeed();
+                foreach (ScrapeQueue q in feed.queueItems)
+                {
+                    _context.ScrapeQueue.Add(q);
+                }
+                _context.SaveChanges();
+
                 queueTotal += feed.queueItems.Count;
             }
 

@@ -13,5 +13,8 @@ namespace FeedReader.Model
         public string ScrapeOutcome { get; set; }
         public string ScrapeErrors { get; set; }
         public string CallbackUrl { get; set; }
+        public string PublicationCode { get; set; }
+        public int? PublicationId { get; set; }
+        public int? PublicationSectionId { get; set; }
     }
 }

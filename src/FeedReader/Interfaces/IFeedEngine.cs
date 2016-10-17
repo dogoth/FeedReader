@@ -9,7 +9,9 @@ namespace FeedReader.Interfaces
     {
         string rawFeedBody { get; }
 
-        Model.PublicationSection section { get; }
+        Model.PublicationSection publicationSection { get; }
+
+        Model.Publication publication { get; }
 
         List<Model.ScrapeQueue> queueItems { get; }
 

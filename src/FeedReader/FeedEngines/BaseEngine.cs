@@ -4,14 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Xml.Linq;
+using FeedReader.Model;
 
 namespace FeedReader.FeedEngines
 {
-    public abstract class BaseRSSEngine : FeedReader.Interfaces.IFeedEngine
+    public abstract class BaseEngine : FeedReader.Interfaces.IFeedEngine
     {
-        public BaseRSSEngine(Model.PublicationSection section, Model.NewsCrud_DBContext dbContext)
+        public BaseEngine (PublicationSection publicationSection, Publication publication, NewsCrud_DBContext dbContext)
         {
-            _section = section;
+            _publicationSection = publicationSection;
+            _publication = publication;
             _dbContext = dbContext;
         }
 
@@ -19,7 +21,9 @@ namespace FeedReader.FeedEngines
 
         protected Model.NewsCrud_DBContext _dbContext;
 
-        protected Model.PublicationSection _section;
+        protected Model.PublicationSection _publicationSection;
+
+        protected Model.Publication _publication;
 
         protected List<Model.ScrapeQueue> _queueItems;
 
@@ -39,24 +43,32 @@ namespace FeedReader.FeedEngines
             }
         }
 
-        public Model.PublicationSection section
+        public Model.PublicationSection publicationSection
         {
             get
             {
-                return _section;
+                return _publicationSection;
+            }
+        }
+
+        public Model.Publication publication
+        {
+            get
+            {
+                return _publication;
             }
         }
 
         public void ProcessFeed()
         {
-            if (_section == null || String.IsNullOrEmpty(_section.Url) == true)
+            if (_publicationSection == null || String.IsNullOrEmpty(_publicationSection.Url) == true)
             {
                 throw new ArgumentException("feed URL cannot be null");
             }
 
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage resp = client.GetAsync(new Uri(section.Url)).Result;
+                HttpResponseMessage resp = client.GetAsync(new Uri(publicationSection.Url)).Result;
                 if (resp.IsSuccessStatusCode == true)
                 {
                     _rawFeedBody = resp.Content.ReadAsStringAsync().Result;
@@ -65,8 +77,8 @@ namespace FeedReader.FeedEngines
 
             parseRawBody();
 
-            _section.LastScraped = DateTimeOffset.Now;
-            _dbContext.Update(section);
+            _publicationSection.LastScraped = DateTimeOffset.Now;
+            _dbContext.Update(_publicationSection);
             _dbContext.SaveChanges();
         }
 
