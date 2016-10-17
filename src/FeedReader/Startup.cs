@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FeedReader.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace FeedReader
 {
@@ -16,6 +18,10 @@ namespace FeedReader
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = "Server=127.0.0.1\\SQL2016;Database=NewsCrud_DB;User Id=app_newscrud;Password=app_newscrud;";
+            services.AddDbContext<NewsCrud_DBContext>(options => options.UseSqlServer(connection));
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,10 +34,15 @@ namespace FeedReader
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            app.UseMvc();
+
+
+
+
+            //app.Run(async (context) =>
+            //{
+            //    await context.Response.WriteAsync("FeedReader Server Started");
+            //});
         }
     }
 }
