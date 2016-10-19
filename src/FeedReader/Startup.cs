@@ -21,6 +21,8 @@ namespace FeedReader
             string connection = "Server=127.0.0.1\\SQL2016;Database=NewsCrud_DB;User Id=app_newscrud;Password=app_newscrud;";
             services.AddDbContext<NewsCrud_DBContext>(options => options.UseSqlServer(connection));
 
+            services.AddSingleton<Interfaces.IQueueContext, Queue.AzureQueue>();
+
             services.AddMvc();
         }
 

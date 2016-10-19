@@ -12,11 +12,13 @@ namespace FeedReader.Controllers
     [Route("api/[controller]")]
     public class FeedProcessorController : Controller
     {
-        private NewsCrud_DBContext _context; 
+        private NewsCrud_DBContext _dbContext;
+        private Interfaces.IQueueContext _queueContext; 
 
-        public FeedProcessorController(NewsCrud_DBContext context)
+        public FeedProcessorController(NewsCrud_DBContext dbContext, Interfaces.IQueueContext queueContext)
         {
-            _context = context;
+            _dbContext = dbContext;
+            _queueContext = queueContext;
         }
 
         [HttpGet]
@@ -31,25 +33,25 @@ namespace FeedReader.Controllers
         // GET: /<controller>/ProcessFeeds
         public string ProcessFeeds()
         {
-            List<Publication> scrapeEnabledPubs = _context.Publication.Where(p => p.ScrapeEnabled == true).ToList();
+            List<Publication> scrapeEnabledPubs = _dbContext.Publication.Where(p => p.ScrapeEnabled == true).ToList();
 
 
             List<Interfaces.IFeedEngine> feedEngines = new List<Interfaces.IFeedEngine>();
             foreach(Publication p in scrapeEnabledPubs)
             {
-                List<PublicationSection> sections = _context.PublicationSection.Where(ps => ps.PublicationId == p.Id && ps.Enabled == true).ToList();
+                List<PublicationSection> sections = _dbContext.PublicationSection.Where(ps => ps.PublicationId == p.Id && ps.Enabled == true).ToList();
                 foreach(PublicationSection ps in sections)
                 {
                     switch (p.Code)
                     {
                         case "SMH":
                             {
-                                feedEngines.Add(new FeedEngines.SMH_RSSEngine(ps, p, _context));
+                                feedEngines.Add(new FeedEngines.SMH_RSSEngine(ps, p, _dbContext));
                                 break;
                             }
                         case "Telegraph":
                             {
-                                feedEngines.Add(new FeedEngines.Telegraph_RSSEngine(ps, p, _context));
+                                feedEngines.Add(new FeedEngines.Telegraph_RSSEngine(ps, p, _dbContext));
                                 break;
                             }
                     }
@@ -63,9 +65,8 @@ namespace FeedReader.Controllers
                 feed.ProcessFeed();
                 foreach (ScrapeQueue q in feed.queueItems)
                 {
-                    _context.ScrapeQueue.Add(q);
+                    _queueContext.Push(q);
                 }
-                _context.SaveChanges();
 
                 queueTotal += feed.queueItems.Count;
             }

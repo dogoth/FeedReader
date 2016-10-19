@@ -16,7 +16,8 @@
     },
     "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.0.1",
     "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.1",
-    "Microsoft.AspNetCore.Mvc": "1.0.1"
+    "Microsoft.AspNetCore.Mvc": "1.0.1",
+    "WindowsAzure.Storage": "7.2.1"
   },
 
   "tools": {
