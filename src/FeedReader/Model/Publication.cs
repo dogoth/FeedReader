@@ -7,6 +7,7 @@ namespace FeedReader.Model
     {
         public Publication()
         {
+            ArticleData = new HashSet<ArticleData>();
             PublicationSection = new HashSet<PublicationSection>();
         }
 
@@ -17,6 +18,7 @@ namespace FeedReader.Model
         public bool? ScrapeEnabled { get; set; }
         public bool? DisplayEnabled { get; set; }
 
+        public virtual ICollection<ArticleData> ArticleData { get; set; }
         public virtual ICollection<PublicationSection> PublicationSection { get; set; }
     }
 }

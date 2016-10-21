@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using FeedReader.Interfaces;
 
-namespace FeedReader.Queue
+namespace FeedReader.Queues.Scrape
 {
-    public class DBQueue: Interfaces.IQueueContext
+    public class DBQueue: Interfaces.IScrapeQueueContext
     {
         private NewsCrud_DBContext _context;
 
@@ -16,17 +16,17 @@ namespace FeedReader.Queue
             _context = context;
         }
 
-        ScrapeQueue IQueueContext.Peek()
+        ScrapeQueue IScrapeQueueContext.Peek()
         {
             throw new NotImplementedException();
         }
 
-        ScrapeQueue IQueueContext.Pop()
+        ScrapeQueue IScrapeQueueContext.Pop()
         {
             throw new NotImplementedException();
         }
 
-        void IQueueContext.Push(ScrapeQueue queueItem)
+        void IScrapeQueueContext.Push(ScrapeQueue queueItem)
         {
             _context.ScrapeQueue.Add(queueItem);
             _context.SaveChanges();

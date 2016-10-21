@@ -6,12 +6,53 @@ namespace FeedReader.Model
 {
     public partial class NewsCrud_DBContext : DbContext
     {
-        public NewsCrud_DBContext(DbContextOptions<NewsCrud_DBContext> options)
-            : base(options)
-        { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ArticleData>(entity =>
+            {
+                entity.ToTable("articleData");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Body).HasColumnName("body");
+
+                entity.Property(e => e.FirstScrapeDate).HasColumnName("firstScrapeDate");
+
+                entity.Property(e => e.IdHash)
+                    .HasColumnName("idHash")
+                    .HasColumnType("varchar(100)");
+
+                entity.Property(e => e.LastScrapeDate).HasColumnName("lastScrapeDate");
+
+                entity.Property(e => e.PublicationId).HasColumnName("publicationID");
+
+                entity.Property(e => e.PublicationSectionId).HasColumnName("publicationSectionID");
+
+                entity.Property(e => e.PublishDate).HasColumnName("publishDate");
+
+                entity.Property(e => e.Title)
+                    .HasColumnName("title")
+                    .HasMaxLength(2000);
+
+                entity.Property(e => e.Url)
+                    .HasColumnName("URL")
+                    .HasColumnType("varchar(2000)");
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.InverseIdNavigation)
+                    .HasForeignKey<ArticleData>(d => d.Id)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_articleData_articleData");
+
+                entity.HasOne(d => d.Publication)
+                    .WithMany(p => p.ArticleData)
+                    .HasForeignKey(d => d.PublicationId)
+                    .HasConstraintName("FK_articleData_publication");
+            });
+
             modelBuilder.Entity<Publication>(entity =>
             {
                 entity.ToTable("publication");
@@ -103,6 +144,7 @@ namespace FeedReader.Model
             });
         }
 
+        public virtual DbSet<ArticleData> ArticleData { get; set; }
         public virtual DbSet<Publication> Publication { get; set; }
         public virtual DbSet<PublicationSection> PublicationSection { get; set; }
         public virtual DbSet<ScrapeQueue> ScrapeQueue { get; set; }

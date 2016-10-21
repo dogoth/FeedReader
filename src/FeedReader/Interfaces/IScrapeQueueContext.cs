@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FeedReader.Interfaces
 {
-    public interface IQueueContext
+    public interface IScrapeQueueContext
     {
         void Push(FeedReader.Model.ScrapeQueue queueItem);
 

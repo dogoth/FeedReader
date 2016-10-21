@@ -5,17 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FeedReader.Model;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace FeedReader.Controllers
 {
     [Route("api/[controller]")]
     public class FeedProcessorController : Controller
     {
         private NewsCrud_DBContext _dbContext;
-        private Interfaces.IQueueContext _queueContext; 
+        private Interfaces.IScrapeQueueContext _queueContext; 
 
-        public FeedProcessorController(NewsCrud_DBContext dbContext, Interfaces.IQueueContext queueContext)
+        public FeedProcessorController(NewsCrud_DBContext dbContext, Interfaces.IScrapeQueueContext queueContext)
         {
             _dbContext = dbContext;
             _queueContext = queueContext;

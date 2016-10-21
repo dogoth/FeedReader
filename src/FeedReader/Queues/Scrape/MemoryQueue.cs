@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using FeedReader.Model;
 
-namespace FeedReader.Queue
+namespace FeedReader.Queues.Scrape
 {
-    public class MemoryQueue : Interfaces.IQueueContext
+    public class MemoryQueue : Interfaces.IScrapeQueueContext
     {
         private Queue<Model.ScrapeQueue> q = new Queue<ScrapeQueue>();
         public ScrapeQueue Peek()

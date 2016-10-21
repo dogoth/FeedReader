@@ -15,13 +15,15 @@ namespace FeedReader
     public class Startup
     {
         // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
+        // Scaffold-DBContext "Server=127.0.0.1\SQL2016;Database=NewsCrud_DB;User Id=app_newscrud;Password=app_newscrud;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Model -Force
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = "Server=127.0.0.1\\SQL2016;Database=NewsCrud_DB;User Id=app_newscrud;Password=app_newscrud;";
             services.AddDbContext<NewsCrud_DBContext>(options => options.UseSqlServer(connection));
 
-            services.AddSingleton<Interfaces.IQueueContext, Queue.AzureQueue>();
+            services.AddSingleton<Interfaces.IScrapeQueueContext, FeedReader.Queues.Scrape.AzureQueue>();
+
+            services.AddSingleton<Interfaces.IArticleQueueContext, FeedReader.Queues.Articles.MemoryQueue>();
 
             services.AddMvc();
         }
