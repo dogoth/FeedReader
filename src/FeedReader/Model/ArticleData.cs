@@ -5,6 +5,11 @@ namespace FeedReader.Model
 {
     public partial class ArticleData
     {
+        public ArticleData()
+        {
+            AuthorArticle = new HashSet<AuthorArticle>();
+        }
+
         public int Id { get; set; }
         public int? PublicationId { get; set; }
         public int? PublicationSectionId { get; set; }
@@ -16,6 +21,7 @@ namespace FeedReader.Model
         public string Title { get; set; }
         public string Body { get; set; }
 
+        public virtual ICollection<AuthorArticle> AuthorArticle { get; set; }
         public virtual ArticleData IdNavigation { get; set; }
         public virtual ArticleData InverseIdNavigation { get; set; }
         public virtual Publication Publication { get; set; }

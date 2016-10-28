@@ -8,12 +8,12 @@ using FeedReader.Model;
 namespace FeedReader.Controllers
 {
     [Route("api/[controller]")]
-    public class StoreArticles : Controller
+    public class ArticleStore : Controller
     {
         private NewsCrud_DBContext _dbContext;
         private Interfaces.IArticleQueueContext _queueContext;
 
-        public StoreArticles(NewsCrud_DBContext dbContext, Interfaces.IArticleQueueContext queueContext)
+        public ArticleStore(NewsCrud_DBContext dbContext, Interfaces.IArticleQueueContext queueContext)
         {
             _dbContext = dbContext;
             _queueContext = queueContext;
@@ -52,8 +52,25 @@ namespace FeedReader.Controllers
                         //try parsing all the bits
                         try
                         {
+                            Author a1 = new Author();
+                            a1.FindByName("");
+                            a1.Name = "test 1";
 
-                            
+                            Author a2 = new Author();
+                            a2.Name = "test 2";
+
+                            ArticleData art = new ArticleData();
+                            art.Body = "art test";
+
+
+                            AuthorArticle a = new AuthorArticle();
+
+                            //try get pub and section info from input
+                            Publication p = new Publication();
+
+                            //otherwise create new publication and/or section
+                            PublicationSection psect = new PublicationSection();
+
                         }
                         catch (Exception ex)
                         {

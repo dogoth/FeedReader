@@ -53,6 +53,49 @@ namespace FeedReader.Model
                     .HasConstraintName("FK_articleData_publication");
             });
 
+            modelBuilder.Entity<Author>(entity =>
+            {
+                entity.ToTable("author");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Country)
+                    .HasColumnName("country")
+                    .HasColumnType("varchar(500)");
+
+                entity.Property(e => e.DateOfBirth)
+                    .HasColumnName("dateOfBirth")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<AuthorArticle>(entity =>
+            {
+                entity.HasKey(e => new { e.AuthorId, e.ArticleId })
+                    .HasName("PK_author_article");
+
+                entity.ToTable("author_article");
+
+                entity.Property(e => e.AuthorId).HasColumnName("authorID");
+
+                entity.Property(e => e.ArticleId).HasColumnName("articleID");
+
+                entity.HasOne(d => d.Article)
+                    .WithMany(p => p.AuthorArticle)
+                    .HasForeignKey(d => d.ArticleId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_author_article_articleData");
+
+                entity.HasOne(d => d.Author)
+                    .WithMany(p => p.AuthorArticle)
+                    .HasForeignKey(d => d.AuthorId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_author_article_author");
+            });
+
             modelBuilder.Entity<Publication>(entity =>
             {
                 entity.ToTable("publication");
@@ -145,6 +188,8 @@ namespace FeedReader.Model
         }
 
         public virtual DbSet<ArticleData> ArticleData { get; set; }
+        public virtual DbSet<Author> Author { get; set; }
+        public virtual DbSet<AuthorArticle> AuthorArticle { get; set; }
         public virtual DbSet<Publication> Publication { get; set; }
         public virtual DbSet<PublicationSection> PublicationSection { get; set; }
         public virtual DbSet<ScrapeQueue> ScrapeQueue { get; set; }
