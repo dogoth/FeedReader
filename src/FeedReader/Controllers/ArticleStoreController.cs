@@ -19,14 +19,17 @@ namespace NewsServer.Controllers
             _queueContext = queueContext;
         }
 
-        [HttpGet]
-        // GET: /<controller>/
-        public string Get()
+        [HttpGet("PullScrapedQueue")]
+        // GET: /<controller>/PullScrapedQueue/
+        public string PullScrapedQueue()
         {
-            //fetch up to 20 each run
+            
             int i = 0;
 
-            while (i < 20)
+            //fetch up to 20 each run (testing!)
+            int max = 20;
+
+            while (i < max)
             {
                 string articleJsonString = _queueContext.Pop();
                 if(String.IsNullOrEmpty(articleJsonString) == true)
@@ -55,6 +58,8 @@ namespace NewsServer.Controllers
                             Author a1 = new Author();
                             a1 = Author.FindByName("",_dbContext);
                             a1.Name = "test 1";
+
+
 
                             Author a2 = new Author();
                             a2.Name = "test 2";
