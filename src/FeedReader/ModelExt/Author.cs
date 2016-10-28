@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FeedReader.Model
+namespace NewsServer.Model
 {
     public partial class Author
     {

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FeedReader.Model;
+using NewsServer.Model;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Queue;
 
-namespace FeedReader.Queues.Articles
+namespace NewsServer.Queues.Articles
 {
     public class AzureQueue : Interfaces.IArticleQueueContext
     {

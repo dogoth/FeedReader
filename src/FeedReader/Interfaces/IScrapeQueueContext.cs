@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FeedReader.Interfaces
+namespace NewsServer.Interfaces
 {
     public interface IScrapeQueueContext
     {
-        void Push(FeedReader.Model.ScrapeQueue queueItem);
+        void Push(NewsServer.Model.ScrapeQueue queueItem);
 
-        FeedReader.Model.ScrapeQueue Pop();
+        NewsServer.Model.ScrapeQueue Pop();
 
-        FeedReader.Model.ScrapeQueue Peek();
+        NewsServer.Model.ScrapeQueue Peek();
     }
 }

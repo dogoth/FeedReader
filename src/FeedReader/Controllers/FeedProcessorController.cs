@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using FeedReader.Model;
+using NewsServer.Model;
 
-namespace FeedReader.Controllers
+namespace NewsServer.Controllers
 {
     [Route("api/[controller]")]
     public class FeedProcessorController : Controller

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace FeedReader.Util
+namespace NewsServer.Util
 {
     public class Tools
     {

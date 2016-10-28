@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FeedReader.Model;
+using NewsServer.Model;
 
-namespace FeedReader.Queues.Articles
+namespace NewsServer.Queues.Articles
 {
     public class MemoryQueue : Interfaces.IArticleQueueContext
     {

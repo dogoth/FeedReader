@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FeedReader.Model
+namespace NewsServer.Model
 {
     public partial class ScrapeQueue
     {

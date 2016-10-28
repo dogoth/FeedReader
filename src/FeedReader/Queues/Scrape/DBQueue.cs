@@ -1,11 +1,11 @@
-﻿using FeedReader.Model;
+﻿using NewsServer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FeedReader.Interfaces;
+using NewsServer.Interfaces;
 
-namespace FeedReader.Queues.Scrape
+namespace NewsServer.Queues.Scrape
 {
     public class DBQueue: Interfaces.IScrapeQueueContext
     {

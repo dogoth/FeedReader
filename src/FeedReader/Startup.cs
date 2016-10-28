@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using FeedReader.Model;
+using NewsServer.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace FeedReader
+namespace NewsServer
 {
     public class Startup
     {
@@ -21,9 +21,9 @@ namespace FeedReader
             string connection = "Server=127.0.0.1\\SQL2016;Database=NewsCrud_DB;User Id=app_newscrud;Password=app_newscrud;";
             services.AddDbContext<NewsCrud_DBContext>(options => options.UseSqlServer(connection));
 
-            services.AddSingleton<Interfaces.IScrapeQueueContext, FeedReader.Queues.Scrape.AzureQueue>();
+            services.AddSingleton<Interfaces.IScrapeQueueContext, NewsServer.Queues.Scrape.AzureQueue>();
 
-            services.AddSingleton<Interfaces.IArticleQueueContext, FeedReader.Queues.Articles.MemoryQueue>();
+            services.AddSingleton<Interfaces.IArticleQueueContext, NewsServer.Queues.Articles.MemoryQueue>();
 
             services.AddMvc();
         }
@@ -45,7 +45,7 @@ namespace FeedReader
 
             //app.Run(async (context) =>
             //{
-            //    await context.Response.WriteAsync("FeedReader Server Started");
+            //    await context.Response.WriteAsync("NewsServer Server Started");
             //});
         }
     }

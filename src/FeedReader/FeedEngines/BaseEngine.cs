@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Xml.Linq;
-using FeedReader.Model;
+using NewsServer.Model;
 
-namespace FeedReader.FeedEngines
+namespace NewsServer.FeedEngines
 {
-    public abstract class BaseEngine : FeedReader.Interfaces.IFeedEngine
+    public abstract class BaseEngine : NewsServer.Interfaces.IFeedEngine
     {
         public BaseEngine (PublicationSection publicationSection, Publication publication, NewsCrud_DBContext dbContext)
         {

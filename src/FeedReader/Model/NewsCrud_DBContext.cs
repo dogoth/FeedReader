@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace FeedReader.Model
+namespace NewsServer.Model
 {
     public partial class NewsCrud_DBContext : DbContext
     {

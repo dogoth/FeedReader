@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FeedReader.Model;
+using NewsServer.Model;
 using System.Xml.Linq;
 
-namespace FeedReader.FeedEngines
+namespace NewsServer.FeedEngines
 {
     public class Telegraph_RSSEngine : BaseEngine
     {

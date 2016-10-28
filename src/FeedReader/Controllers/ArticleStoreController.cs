@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using FeedReader.Model;
+using NewsServer.Model;
 
-namespace FeedReader.Controllers
+namespace NewsServer.Controllers
 {
     [Route("api/[controller]")]
     public class ArticleStore : Controller
@@ -53,7 +53,7 @@ namespace FeedReader.Controllers
                         try
                         {
                             Author a1 = new Author();
-                            a1.FindByName("");
+                            a1 = Author.FindByName("",_dbContext);
                             a1.Name = "test 1";
 
                             Author a2 = new Author();
